@@ -14,23 +14,30 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
-    * Tables
+    * Table Spec
         * Users
-            * email
+            * email (unique)
             * name
             * password
-            * type
-            * removable
-            * privilege
-        * Booking
-            * user_email
+            * type (0=sysadmin, 1=normal)
+            * removable (Y, N)
+            * privileged (Y, N)
+        * Bookings
+            * email
             * start
             * end
-            * team
+            * team (multivalue text)
         * Rooms
-            * number
-            * building
-            * size
+            * number (unique)
+            * building (0=Hill, 1=Hunt)
+            * size (4, 6, 12)
+    * Table generate scripts
+        * Users
+            * bin\rails generate model User email:string:uniq name:string password:string type:integer removable:boolean privilege:boolean
+        * Bookings
+            * bin\rails generate model Booking email:string start:datetime end:datetime team:text
+        * Rooms
+            * bin\rails generate model Room number:integer:uniq building:integer size:integer
 
 * Database initialization
 
