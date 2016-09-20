@@ -4,6 +4,8 @@ one:
   email: MyString
   name: MyString
   password: MyString
+  address: MyText
+  phone: MyText
   type: 1
   removable: false
   privilege: false
@@ -12,6 +14,8 @@ two:
   email: MyString
   name: MyString
   password: MyString
+  address: MyText
+  phone: MyText
   type: 1
   removable: false
   privilege: false

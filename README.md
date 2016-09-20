@@ -9,10 +9,6 @@ Things you may want to cover:
     * Ruby version 2.2.4
     * Rails version >= 5.0.0.1
 
-* System dependencies
-
-* Configuration
-
 * Database creation
     * Table Spec
         * Users
@@ -31,13 +27,17 @@ Things you may want to cover:
             * number (unique)
             * building (0=Hill, 1=Hunt)
             * size (4, 6, 12)
-    * Table generate scripts
+            
+* Initial resource creation
+    * Generate scripts
         * Users
-            * bin\rails generate model User email:string:uniq name:string password:string type:integer removable:boolean privilege:boolean
+            * bin\rails generate scaffold User email:string:uniq name:string password:string address:text phone:text type:integer removable:boolean privilege:boolean
         * Bookings
-            * bin\rails generate model Booking email:string start:datetime end:datetime team:text
+            * bin\rails generate scaffold Booking email:string start:datetime end:datetime team:text
         * Rooms
-            * bin\rails generate model Room number:integer:uniq building:integer size:integer
+            * bin\rails generate scaffold Room number:integer:uniq building:integer size:integer
+    * Run the migrate
+        * bin\rails db:migrate
 
 * Database initialization
 
