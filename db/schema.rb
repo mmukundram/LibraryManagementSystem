@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160920022040) do
     t.string   "password"
     t.text     "address"
     t.text     "phone"
-    t.integer  "type"
+    t.boolean  "admin"
     t.boolean  "removable"
     t.boolean  "privilege"
     t.datetime "created_at", null: false

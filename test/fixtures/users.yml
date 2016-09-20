@@ -6,7 +6,7 @@ one:
   password: MyString
   address: MyText
   phone: MyText
-  type: 1
+  admin: false
   removable: false
   privilege: false
 
@@ -16,6 +16,6 @@ two:
   password: MyString
   address: MyText
   phone: MyText
-  type: 1
+  admin: false
   removable: false
   privilege: false

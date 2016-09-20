@@ -15,9 +15,9 @@ Things you may want to cover:
             * email (unique)
             * name
             * password
-            * type (0=sysadmin, 1=normal)
-            * removable (Y, N)
-            * privileged (Y, N)
+            * admin (true, false)
+            * removable (true, false)
+            * privilege (true, false)
         * Bookings
             * email
             * start
@@ -31,7 +31,7 @@ Things you may want to cover:
 * Initial resource creation
     * Generate scripts
         * Users
-            * bin\rails generate scaffold User email:string:uniq name:string password:string address:text phone:text type:integer removable:boolean privilege:boolean
+            * bin\rails generate scaffold User email:string:uniq name:string password:string address:text phone:text admin:boolean removable:boolean privilege:boolean
         * Bookings
             * bin\rails generate scaffold Booking email:string start:datetime end:datetime team:text
         * Rooms
