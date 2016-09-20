@@ -9,11 +9,24 @@
   </head>
 
   <body>
-    <div>
-      <h1>Library Management System</h1>
-      <h5>Home</h5>
-      <h5>Logout</h5>
+    <header>
+      <div>
+        <h1>Library Management System</h1>
+        <%= link_to "Home", root_path %>
+        <% if logged_in? %>
+            <%= link_to "Profile", current_user %>
+            <%= link_to "Log out", logout_path, method: :delete %>
+        <% else %>
+            <%= link_to "Log In", login_path %>
+        <% end %>
+      </div>
+    </header>
+    <div class="container">
+      <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+      <%= yield %>
+      <%= debug(params) if Rails.env.development? %>
     </div>
-    <%= yield %>
   </body>
 </html>

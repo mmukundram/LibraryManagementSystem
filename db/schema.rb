@@ -33,14 +33,14 @@ ActiveRecord::Schema.define(version: 20160920022040) do
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "name"
-    t.string   "password"
+    t.string   "password_digest"
     t.text     "address"
     t.text     "phone"
     t.boolean  "admin"
     t.boolean  "removable"
     t.boolean  "privilege"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
