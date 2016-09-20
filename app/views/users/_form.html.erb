@@ -1,57 +1,76 @@
-<%= form_for(user) do |f| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for(user, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if user.errors.any? %>
+        <div id="error_explanation" class="alert alert-dismissable alert-danger">
+          <%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :email, class: "col-lg-2 control-label" %>
+      <div class="col-lg-5">
+        <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
+    <div class="form-group">
+      <%= f.label :name, class: "col-lg-2 control-label" %>
+      <div class="col-lg-5">
+        <%= f.text_field :name, class: "form-control", placeholder: "Name" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+    <div class="form-group">
+      <%= f.label :password, class: "col-lg-2 control-label" %>
+      <div class="col-lg-5">
+        <%= f.password_field :password, class: "form-control", placeholder: "Password", autocomplete: "off" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.text_field :password %>
-  </div>
+    <div class="form-group">
+      <%= f.label :address, class: "col-lg-2 control-label" %>
+      <div class="col-lg-5">
+        <%= f.text_area :address, class: "form-control", placeholder: "Address" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :address %>
-    <%= f.text_area :address %>
-  </div>
+    <div class="form-group">
+      <%= f.label :phone, class: "col-lg-2 control-label" %>
+      <div class="col-lg-5">
+        <%= f.text_area :phone, class: "form-control", placeholder: "Phone Number" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :phone %>
-    <%= f.text_area :phone %>
-  </div>
+    <div class="form-group">
+      <%= f.label :admin, class: "col-lg-2 control-label" %>
+      <div class="col-lg-1">
+        <%= f.check_box :admin, class: "form-control" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :admin %>
-    <%= f.check_box :admin %>
-  </div>
+    <div class="form-group">
+      <%= f.label :privilege, class: "col-lg-2 control-label" %>
+      <div class="col-lg-1">
+        <%= f.check_box :privilege, class: "form-control" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :removable %>
-    <%= f.check_box :removable %>
-  </div>
+    <div class="form-group">
+      <%= f.label :removable, class: "col-lg-2 control-label" %>
+      <div class="col-lg-1">
+        <%= f.check_box :removable, class: "form-control", checked: true, disabled: true %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :privilege %>
-    <%= f.check_box :privilege %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <br>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <%= f.submit "Submit", class: "btn btn-default" %>
+      </div>
+    </div>
 <% end %>

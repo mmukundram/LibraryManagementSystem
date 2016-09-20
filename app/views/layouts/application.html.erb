@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Library Management System</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>Library Management System</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <header>
-      <div>
-        <h1>Library Management System</h1>
-        <%= link_to "Home", root_path %>
+<body>
+<header class="navbar navbar-fixed-top navbar-default">
+  <div class="container">
+    <%= link_to "Library Management System", root_path, class: "navbar-brand" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-            <%= link_to "Profile", current_user %>
-            <%= link_to "Log out", logout_path, method: :delete %>
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "Profile", current_user %></li>
+            <li><%= link_to "Logout", logout_path, method: :delete %></li>
         <% else %>
-            <%= link_to "Log In", login_path %>
+            <li><%= link_to "Login", login_path %></li>
         <% end %>
-      </div>
-    </header>
-    <div class="container">
-      <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
-      <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
-  </body>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+    <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+
+  <%= yield %>
+  <%= debug(params) if Rails.env.development? %>
+</div>
+
+
+<footer class="footer">
+  <small>
+    The Library Management System
+  </small>
+  <rightsmall>
+    by Kunal Kapoor, Mukundram M, Abhi
+  </rightsmall>
+</footer>
+</body>
 </html>
