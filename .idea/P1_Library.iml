@@ -115,7 +115,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v5.0.0.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arel (v7.1.2, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.2, ruby-2.2.4-p230) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.11.2, ruby-2.2.4-p230) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.13.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-rails (v4.2.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-script (v2.4.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-script-source (v1.10.0, ruby-2.2.4-p230) [gem]" level="application" />
@@ -137,6 +137,7 @@
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.12.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v1.2.1, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.6.8, ruby-2.2.4-p230) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pg (v0.18.4, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pkg-config (v1.1.7, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="puma (v3.6.0, ruby-2.2.4-p230) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v2.0.1, ruby-2.2.4-p230) [gem]" level="application" />
