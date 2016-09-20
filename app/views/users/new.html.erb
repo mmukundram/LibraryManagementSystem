@@ -9,4 +9,8 @@
   </div>
 </div>
 
-<%= link_to 'Back', users_path %>
+<% if logged_in? %>
+    <%= link_to 'Back', users_path, class: "btn btn-lg btn-primary" %>
+<% else %>
+    <%= link_to 'Back', root_path, class: "btn btn-lg btn-primary" %>
+<% end %>
