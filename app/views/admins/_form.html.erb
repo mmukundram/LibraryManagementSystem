@@ -1,4 +1,4 @@
-<%= form_for(user, :html => {:class => "form-horizontal"}) do |f| %>
+<%= form_for(@user, :url => admins_path, :html => {:class => "form-horizontal"}) do |f| %>
     <% if user.errors.any? %>
         <div id="error_explanation" class="alert alert-dismissable alert-danger">
           <%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:

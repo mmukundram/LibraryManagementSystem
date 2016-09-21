@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class AdminsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if !logged_in?
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
     elsif !current_user.admin
-      flash.now[:danger] = "You are not authorized to view this page."
+      flash.now[:danger] = 'You are not authorized to view this page.'
     else
       @users = User.all
     end
@@ -18,18 +18,22 @@ class UsersController < ApplicationController
   def show
     if !logged_in?
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
+    elsif !current_user.admin
+      flash.now[:danger] = 'You are not authorized to view this page.'
     else
       @user = User.find(params[:id])
-      if !current_user.admin and current_user.email != @user.email
-        flash.now[:danger] = "You are not authorized to view this user's details."
-        @user = nil
-      end
     end
   end
 
   # GET /users/new
   def new
-    @user = User.new
+    if !logged_in?
+      flash.now[:danger] = 'You are not logged in. Please login to continue.'
+    elsif !current_user.admin
+      flash.now[:danger] = 'You are not authorized to view this page.'
+    else
+      @user = User.new
+    end
   end
 
   # GET /users/1/edit
@@ -38,8 +42,8 @@ class UsersController < ApplicationController
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
     else
       @user = User.find(params[:id])
-      if current_user.email != @user.email
-        flash.now[:danger] = "You cannot edit another user's profile."
+      if @user.email != current_user.email
+        flash.now[:danger] = "You cannot edit another admin's profile."
         @user = nil
       end
     end
@@ -49,14 +53,11 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.admin = false
+    @user.admin = true
     @user.removable = true
     @user.privilege = false
     if @user.save
-      if !logged_in?
-        log_in @user
-      end
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to admins_path(@user), notice: 'Admin was successfully created.'
     else
       render :new
     end
@@ -70,13 +71,13 @@ class UsersController < ApplicationController
       flag = true
     end
     if @user.update(user_params)
-      @user.admin = false
+      @user.admin = true
       @user.removable = true
       if flag
         log_out
         log_in(@user)
       end
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to admin_path(@user), notice: 'Admin was successfully updated.'
     else
       render :edit
     end
@@ -86,13 +87,9 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     if @user.removable
-      if @user.email == current_user.email
-        log_out
+      if @user.email != current_user.email
         @user.destroy
-        redirect_to root_url, notice: 'User was successfully destroyed.'
-      else
-        @user.destroy
-        redirect_to users_url, notice: 'User was successfully destroyed.'
+        redirect_to admin_url, notice: 'Admin was successfully destroyed.'
       end
     end
   end
@@ -107,5 +104,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :name, :password, :address, :phone, :admins, :removable, :privilege)
   end
-
 end

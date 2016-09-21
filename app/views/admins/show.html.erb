@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="page-header">
-            <h1>User Details</h1>
+            <h1>Admin Details</h1>
           </div>
 
           <div class="col-lg-10 col-lg-offset-1">
@@ -29,10 +29,6 @@
                 <td>Admin?</td>
                 <td class="active"><%= @user.admin %></td>
               </tr>
-              <tr>
-                <td>Has privilege to do multiple bookings?</td>
-                <td class="active"><%= @user.privilege %></td>
-              </tr>
               </tbody>
             </table>
             <% if current_user.email == @user.email %>
@@ -43,7 +39,5 @@
       </div>
     </div>
     <br>
-    <% if logged_in? and current_user.admin %>
-        <%= link_to 'Back to Users', users_path, class: "btn btn-primary" %>
-    <% end %>
+    <%= link_to 'Back to Admins', admins_path, class: "btn btn-primary" %>
 <% end %>

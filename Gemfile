@@ -26,6 +26,8 @@ gem 'jbuilder', '~> 2.4.1'
 gem 'bcrypt', '3.1.11'
 
 gem 'bootstrap-sass', '3.3.6'
+gem 'twitter-bootstrap-rails'
+gem 'bootbox-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
