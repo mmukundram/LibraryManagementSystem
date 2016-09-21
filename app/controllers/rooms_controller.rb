@@ -10,6 +10,9 @@ class RoomsController < ApplicationController
       flash.now[:danger] = "You are not authorized to view this page."
     else
       @rooms = Room.all
+      @rooms.each do |room|
+        set_size_text room
+      end
       # Add booked field based on start and end date
     end
   end
@@ -21,6 +24,7 @@ class RoomsController < ApplicationController
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
     else
       @room = Room.find(params[:id])
+      set_size_text @room
       if current_user.admin
         # Get library member who has booked the room
       end
@@ -44,6 +48,7 @@ class RoomsController < ApplicationController
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
     else
       @room = Room.find(params[:id])
+      set_size_text @room
       if !current_user.admin
         flash.now[:danger] = "You are not authorized to view this page."
         @room = nil
@@ -82,6 +87,19 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def set_size_text (room)
+    if room
+      if room.size == 4
+        room.sizetext = 'Small (4)'
+      elsif room.size == 6
+        room.sizetext = 'Medium (6)'
+      else
+        room.sizetext = 'Large (12)'
+      end
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_room
     @room = Room.find(params[:id])

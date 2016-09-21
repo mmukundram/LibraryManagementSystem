@@ -35,9 +35,11 @@ Things you may want to cover:
         * Bookings
             * bin\rails generate scaffold Booking email:string start:datetime end:datetime team:text
         * Rooms
-            * bin\rails generate scaffold Room number:integer:uniq building:integer size:integer
-    * Run the migrate
+            * bin\rails generate scaffold Room number:integer:uniq building:string size:integer
+    * Setup DB
+        * bin\rails db:setup
         * bin\rails db:migrate
+        * bin\rails db:seed
 
 * Database initialization
 

@@ -1,19 +1,33 @@
-<p id="notice"><%= notice %></p>
+<% if logged_in? and @room %>
+    <div class="bs-docs-section clearfix">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-header">
+            <h1>Room Details</h1>
+          </div>
 
-<p>
-  <strong>Number:</strong>
-  <%= @room.number %>
-</p>
-
-<p>
-  <strong>Building:</strong>
-  <%= @room.building %>
-</p>
-
-<p>
-  <strong>Size:</strong>
-  <%= @room.size %>
-</p>
-
-<%= link_to 'Edit', edit_room_path(@room) %> |
-<%= link_to 'Back', rooms_path %>
+          <div class="col-lg-10 col-lg-offset-1">
+            <table class="table table-striped table-hover table-bordered">
+              <tbody>
+              <tr>
+                <td class="col-lg-5">Number</td>
+                <td class="active"><%= @room.number %></td>
+              </tr>
+              <tr>
+                <td>Building</td>
+                <td class="active"><%= @room.building %></td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td class="active"><%= @room.sizetext %></td>
+              </tr>
+              </tbody>
+            </table>
+            <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-default" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <%= link_to 'Back to Rooms', rooms_path, class: "btn btn-primary" %>
+<% end %>
