@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   post            '/login',           to: 'sessions#create'
   delete          '/logout',          to: 'sessions#destroy'
 
-  resources       :rooms
   resources       :bookings
   resources       :users
   resources       :admins
+
+  resources       :rooms
+  get             '/search/rooms',     to: 'rooms#search'
 
   root 'sessions#new'
 end

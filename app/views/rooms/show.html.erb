@@ -23,7 +23,9 @@
               </tr>
               </tbody>
             </table>
-            <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-default" %>
+            <% if current_user.admin %>
+                <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-default" %>
+            <% end %>
           </div>
         </div>
       </div>

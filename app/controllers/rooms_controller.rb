@@ -1,20 +1,51 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
+  def schedule
+    # Show schedule of all rooms
+  end
+
+  def history
+    # Show booking history of room
+  end
+
+  def search
+    if params[:room].blank?
+      @room = Room.new
+    else
+      @room = Room.new(room_params)
+    end
+    if params[:room] and (params[:room][:number] or params[:room][:building] or params[:room][:size])
+      @rooms = Room.search(params[:room])
+      if !@rooms.present?
+        @rooms = nil
+      else
+        @rooms.each do |room|
+          set_size_text room
+        end
+      end
+    end
+  end
+
   # GET /rooms
   # GET /rooms.json
   def index
     if !logged_in?
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
-    elsif !current_user.admin
-      flash.now[:danger] = "You are not authorized to view this page."
-    else
+    end
+
+    if current_user.admin
       @rooms = Room.all
+    end
+    if params[:number] or params[:building] or params[:size]
+      @rooms = Room.search(params).order("number ASC")
+    end
+    if @rooms
       @rooms.each do |room|
         set_size_text room
       end
-      # Add booked field based on start and end date
     end
+    # Add booked field based on start and end date
   end
 
   # GET /rooms/1
@@ -27,6 +58,7 @@ class RoomsController < ApplicationController
       set_size_text @room
       if current_user.admin
         # Get library member who has booked the room
+        # Show booking history button
       end
     end
   end
@@ -52,6 +84,8 @@ class RoomsController < ApplicationController
       if !current_user.admin
         flash.now[:danger] = "You are not authorized to view this page."
         @room = nil
+      else
+        # Admin can change status of room (book/release for member)
       end
     end
   end
@@ -102,7 +136,7 @@ class RoomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_room
-    @room = Room.find(params[:id])
+    @room = Room.find_by_id(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
