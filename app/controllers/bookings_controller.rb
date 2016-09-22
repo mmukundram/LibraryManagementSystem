@@ -14,7 +14,12 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
+    @room = Room.find_by(number: params[:room])
     @booking = Booking.new
+    @booking.room = @room.number
+    if !current_user.admin
+      @booking.email = current_user.email
+    end
   end
 
   # GET /bookings/1/edit
@@ -26,28 +31,50 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(booking_params)
 
-    respond_to do |format|
-      if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-        format.json { render :show, status: :created, location: @booking }
-      else
-        format.html { render :new }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+    flag = true
+    user = User.find_by(email: @booking.email)
+    if user.blank?
+      flash.now[:danger] = 'No user with that email exists'
+    elsif user.admin
+      flash.now[:danger] = 'An admin can only book on behalf of a library member, not (him|her)self or another admin.'
+    elsif @booking.start.blank?
+      flash.now[:danger] = 'Please enter a valid booking date and time'
+    elsif @booking.start < DateTime.current
+      flash.now[:danger] = 'You cannot book a room in the past.'
+    elsif @booking.start >= (Date.today + 8)
+      flash.now[:danger] = 'You cannot book a room more than a week in advance.'
+    else
+      @booking.team.split(",").each do |str|
+        str.chomp!()
+        str.strip!()
+        user = User.find_by(email: str)
+        if user.blank?
+          flag = false
+          flash.now[:danger] = "No user with email " + str + " exists."
+          break
+        end
+      end
+      if flag
+        existingBookings = Booking.search(@booking)
+        if existingBookings.present?
+          flash.now[:danger] = 'An existing booking exists for the slot.'
+        elsif @booking.save
+          redirect_to @booking, notice: 'Booking was successfully created.'
+          return
+        end
       end
     end
+    @room = Room.find_by(number: @booking.room)
+    render :new
   end
 
   # PATCH/PUT /bookings/1
   # PATCH/PUT /bookings/1.json
   def update
-    respond_to do |format|
-      if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
-        format.json { render :show, status: :ok, location: @booking }
-      else
-        format.html { render :edit }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
-      end
+    if @booking.update(booking_params)
+      redirect_to @booking, notice: 'Booking was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -55,20 +82,18 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1.json
   def destroy
     @booking.destroy
-    respond_to do |format|
-      format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_booking
-      @booking = Booking.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_booking
+    @booking = Booking.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def booking_params
-      params.require(:booking).permit(:email, :start, :end, :team)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def booking_params
+    params.require(:booking).permit(:room, :email, :start, :end, :team)
+  end
+
 end

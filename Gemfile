@@ -29,6 +29,9 @@ gem 'bootstrap-sass', '3.3.6'
 gem 'twitter-bootstrap-rails'
 gem 'bootbox-rails'
 
+gem 'pry'
+gem 'pry-doc'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

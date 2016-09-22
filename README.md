@@ -33,7 +33,7 @@ Things you may want to cover:
         * Users
             * bin\rails generate scaffold User email:string:uniq name:string password:string address:text phone:text admin:boolean removable:boolean privilege:boolean
         * Bookings
-            * bin\rails generate scaffold Booking email:string start:datetime end:datetime team:text
+            * bin\rails generate scaffold Booking email:string room:integer start:datetime end:datetime team:text
         * Rooms
             * bin\rails generate scaffold Room number:integer:uniq building:string size:integer
     * Setup DB

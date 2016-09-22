@@ -32,15 +32,10 @@ class RoomsController < ApplicationController
   def index
     if !logged_in?
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
-    end
-
-    if current_user.admin
+    elsif !current_user.admin
+      flash.now[:danger] = 'You are not authorized to view this page.'
+    else
       @rooms = Room.all
-    end
-    if params[:number] or params[:building] or params[:size]
-      @rooms = Room.search(params).order("number ASC")
-    end
-    if @rooms
       @rooms.each do |room|
         set_size_text room
       end

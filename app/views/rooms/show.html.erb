@@ -26,6 +26,8 @@
             <% if current_user.admin %>
                 <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-default" %>
             <% end %>
+            <%= link_to 'Book', new_booking_path(:room => @room.number), class: "btn btn-default" %>
+            <%= link_to 'Release', new_booking_path(:room => @room.number), class: "btn btn-default" %>
           </div>
         </div>
       </div>

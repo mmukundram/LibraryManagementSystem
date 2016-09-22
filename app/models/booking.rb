@@ -1,4 +1,8 @@
 class Booking < ApplicationRecord
-  belongs_to :room, :user
-  validates :email, :start, presence: true
+  validates :email, :room, :start, presence: true
+  attr_accessor :start_date, :start_time
+
+  def self.search(booking)
+    where("room = ? and start = ? and (end IS NULL or end = '')", booking.room, booking.start)
+  end
 end

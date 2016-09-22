@@ -1,6 +1,5 @@
 class Room < ApplicationRecord
-  has_many :bookings
-  attr_accessor :sizetext, :searchroom
+  attr_accessor :sizetext, :status
   validates :building, :size, presence: true
   validates :number, presence: true, numericality: {only_integer: true}, uniqueness: true
 

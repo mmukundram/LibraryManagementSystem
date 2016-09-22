@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20160920022040) do
 
   create_table "bookings", force: :cascade do |t|
     t.string   "email"
+    t.integer  "room"
     t.datetime "start"
     t.datetime "end"
     t.text     "team"
