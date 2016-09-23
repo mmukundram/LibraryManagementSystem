@@ -50,11 +50,17 @@ class RoomsController < ApplicationController
       flash.now[:danger] = 'You are not logged in. Please login to continue.'
     else
       @room = Room.find(params[:id])
+      @room.status = 'Available'
       set_size_text @room
-      if current_user.admin
-        # Get library member who has booked the room
-        # Show booking history button
+      email = Booking.searchUserBookedRoom(@room.number)
+      @user = User.find_by(email: email)
+      if @user.present?
+        @room.status = 'Booked'
       end
+      if !current_user.admin
+        @user = nil
+      end
+      # Show booking history button
     end
   end
 

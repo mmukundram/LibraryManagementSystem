@@ -21,6 +21,20 @@
                 <td>Size</td>
                 <td class="active"><%= @room.sizetext %></td>
               </tr>
+              <tr>
+                <td>Current Availability</td>
+                <% if @room.status == 'Booked' %>
+                    <td class="active danger"><%= @room.status %></td>
+                <% else %>
+                    <td class="active success"><%= @room.status %></td>
+                <% end %>
+              </tr>
+              <% if @user %>
+                  <tr>
+                    <td>User who has the room</td>
+                    <td class="active"><%= @user.email %></td>
+                  </tr>
+              <% end %>
               </tbody>
             </table>
             <% if current_user.admin %>

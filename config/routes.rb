@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get             'calendars/index'
+
   get             'home',             to: 'home#index'
 
   get             '/login',           to: 'sessions#new'

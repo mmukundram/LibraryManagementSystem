@@ -32,6 +32,8 @@ gem 'bootbox-rails'
 gem 'pry'
 gem 'pry-doc'
 
+gem "simple_calendar", "~> 2.0"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

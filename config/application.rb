@@ -11,5 +11,7 @@ module P1Library
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.time_zone = "America/New_York"
+    config.active_record.default_timezone = :local
   end
 end

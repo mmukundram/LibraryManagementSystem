@@ -39,9 +39,9 @@ class BookingsController < ApplicationController
       flash.now[:danger] = 'An admin can only book on behalf of a library member, not (him|her)self or another admin.'
     elsif @booking.start.blank?
       flash.now[:danger] = 'Please enter a valid booking date and time'
-    elsif @booking.start < DateTime.current
+    elsif @booking.start.to_i < DateTime.now.to_i
       flash.now[:danger] = 'You cannot book a room in the past.'
-    elsif @booking.start >= (Date.today + 8)
+    elsif @booking.start.to_i >= (Date.today + 8).to_datetime.to_i
       flash.now[:danger] = 'You cannot book a room more than a week in advance.'
     else
       @booking.team.split(",").each do |str|
@@ -71,18 +71,16 @@ class BookingsController < ApplicationController
   # PATCH/PUT /bookings/1
   # PATCH/PUT /bookings/1.json
   def update
-    if @booking.update(booking_params)
-      redirect_to @booking, notice: 'Booking was successfully updated.'
-    else
-      render :edit
-    end
   end
 
   # DELETE /bookings/1
   # DELETE /bookings/1.json
   def destroy
-    @booking.destroy
-    redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
+    @room = Room.find_by(number: params[:room])
+    if @booking.email != current_user.email and !current_user.admin
+
+    end
+    redirect_to home_path, notice: 'Booking was successfully destroyed.'
   end
 
   private

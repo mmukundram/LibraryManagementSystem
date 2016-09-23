@@ -1,0 +1,28 @@
+<% if logged_in? and current_user.admin %>
+    <div class="bs-docs-section clearfix">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-header">
+            <h1>Booking Calendar</h1>
+          </div>
+
+          <div class="col-lg-10 col-lg-offset-1">
+            <%= month_calendar(attribute: :start, events: @bookings, class: "table-striped table-bordered") do |date, bookings| %>
+                <%= date %>
+
+                <% bookings.each do |booking| %>
+                    <div>
+                      <%= "Room " + booking.room.to_s + ", User: " + booking.email %>
+                    </div>
+                <% end %>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <%= link_to 'Back to Home', home_path, class: "btn btn-primary" %>
+<% end %>
+
+
