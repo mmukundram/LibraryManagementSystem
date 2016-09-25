@@ -55,10 +55,18 @@ class BookingsController < ApplicationController
       @booking.team.split(",").each do |str|
         str.chomp!()
         str.strip!()
-        user = User.find_by(email: str)
-        if user.blank?
+        user2 = User.find_by(email: str)
+        if user2.blank?
           flag = false
           flash.now[:danger] = "No user with email " + str + " exists."
+          break
+        elsif user2.email == user.email
+          flag = false
+          flash.now[:danger] = "You cannot add the booking owner (" + user2.email + ")to the team."
+          break
+        elsif user2.admin
+          flag = false
+          flash.now[:danger] = "You cannot add an admin (" + user2.email + ") to the team."
           break
         end
       end
@@ -70,7 +78,14 @@ class BookingsController < ApplicationController
         elsif !current_user.admin and userBooking.present? and !user.privilege
           flash.now[:danger] = 'You have another active booking at the same time (contact the admin for the privilege to book multiple rooms at the same time)'
         elsif @booking.save
-          # Send email here
+          @booking.team.split(",").each do |str|
+            str.chomp!()
+            str.strip!()
+            user2 = User.find_by(email: str)
+            if user2.present?
+              # Send email to user2.email
+            end
+          end
           redirect_to @booking, notice: 'Booking was successfully created.'
           return
         end
