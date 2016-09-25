@@ -70,7 +70,7 @@ class BookingsController < ApplicationController
         elsif !current_user.admin and userBooking.present? and !user.privilege
           flash.now[:danger] = 'You have another active booking at the same time (contact the admin for the privilege to book multiple rooms at the same time)'
         elsif @booking.save
-          // Send email here
+          # Send email here
           redirect_to @booking, notice: 'Booking was successfully created.'
           return
         end
