@@ -41,11 +41,14 @@
                 <%= link_to 'Edit', edit_room_path(@room), class: "btn btn-default" %>
             <% end %>
             <%= link_to 'Book', new_booking_path(:room => @room.number), class: "btn btn-default" %>
-            <%= link_to 'Release', new_booking_path(:room => @room.number), class: "btn btn-default" %>
           </div>
         </div>
       </div>
     </div>
     <br>
-    <%= link_to 'Back to Rooms', rooms_path, class: "btn btn-primary" %>
+    <% if current_user.admin %>
+        <%= link_to 'Back to Rooms', rooms_path, class: "btn btn-primary" %>
+    <% else %>
+        <%= link_to 'Back to Search', search_rooms_path, class: "btn btn-primary" %>
+    <% end %>
 <% end %>

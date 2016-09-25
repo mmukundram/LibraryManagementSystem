@@ -12,11 +12,11 @@
                 <%= link_to "Manage Users", users_path, class: "navbar-brand" %>
                 <%= link_to "Manage Admins", admins_path, class: "navbar-brand" %>
                 <%= link_to "Manage Rooms", rooms_path, class: "navbar-brand" %>
-                <%= link_to "Booking History", home_path, class: "navbar-brand" %>
+                <%= link_to "Booking History", home_history_path, class: "navbar-brand" %>
                 <%= link_to "Booking Calendar", calendars_index_path, class: "navbar-brand" %>
             <% else %>
                 <%= link_to "Search Rooms", search_rooms_path, class: "navbar-brand" %>
-                <%= link_to "Booking History", home_path, class: "navbar-brand" %>
+                <%= link_to "Booking History", bookings_path, class: "navbar-brand" %>
             <% end %>
 
           </div>

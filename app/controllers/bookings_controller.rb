@@ -4,12 +4,20 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    if current_user.admin
+      if params[:booking][:email].blank? and params[:booking][:room].blank?
+        @bookings = Booking.all.order("start")
+      elsif @bookings = Booking.findByUserAndRoom(params[:booking][:email], params[:booking][:room])
+      end
+    else
+      @bookings = Booking.findByUser(current_user.email)
+    end
   end
 
   # GET /bookings/1
   # GET /bookings/1.json
   def show
+    @booking = Booking.find(params[:id])
   end
 
   # GET /bookings/new
@@ -56,8 +64,11 @@ class BookingsController < ApplicationController
       end
       if flag
         existingBookings = Booking.search(@booking)
+        userBooking = Booking.findActiveBookingByUser(@booking)
         if existingBookings.present?
           flash.now[:danger] = 'An existing booking exists for the slot.'
+        elsif !current_user.admin and userBooking.present? and !user.privilege
+          flash.now[:danger] = 'You have another active booking at the same time (contact the admin for the privilege to book multiple rooms at the same time)'
         elsif @booking.save
           redirect_to @booking, notice: 'Booking was successfully created.'
           return
@@ -76,11 +87,11 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1
   # DELETE /bookings/1.json
   def destroy
-    @room = Room.find_by(number: params[:room])
-    if @booking.email != current_user.email and !current_user.admin
-
+    @booking = Booking.find(params[:id])
+    @booking.end = Booking.getEndTime(@booking.start)
+    if @booking.save
+      redirect_to home_path, notice: 'Booking was successfully released.'
     end
-    redirect_to home_path, notice: 'Booking was successfully destroyed.'
   end
 
   private

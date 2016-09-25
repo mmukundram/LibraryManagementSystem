@@ -27,11 +27,19 @@
               </tr>
               <tr>
                 <td>Admin?</td>
-                <td class="active"><%= @user.admin %></td>
+                <% if @user.admin %>
+                    <td class="active">Yes</td>
+                <% else %>
+                    <td class="active">No</td>
+                <% end %>
               </tr>
               <tr>
                 <td>Has privilege to do multiple bookings?</td>
-                <td class="active"><%= @user.privilege %></td>
+                <% if @user.privilege %>
+                    <td class="success">Yes</td>
+                <% else %>
+                    <td class="danger">No</td>
+                <% end %>
               </tr>
               </tbody>
             </table>

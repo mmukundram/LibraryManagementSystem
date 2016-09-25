@@ -1,4 +1,4 @@
-<%= form_for(booking, :url => bookings_path, :html => {:class => "form-horizontal"}) do |f| %>
+<%= form_for(booking, :url => bookings_path, :method => 'post', :html => {:class => "form-horizontal"}) do |f| %>
     <% if booking.errors.any? %>
         <div id="error_explanation" class="alert alert-dismissable alert-danger">
           <%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:
@@ -24,7 +24,7 @@
         <% if current_user.admin %>
             <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
         <% else %>
-            <%= f.text_field :email, class: "form-control", placeholder: "Email", disabled: true %>
+            <%= f.text_field :email, class: "form-control", placeholder: "Email", readonly: true %>
         <% end %>
       </div>
     </div>

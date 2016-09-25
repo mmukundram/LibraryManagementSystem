@@ -1,28 +1,53 @@
-<p id="notice"><%= notice %></p>
+<% if logged_in? %>
+    <div class="bs-docs-section clearfix">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-header">
+            <h1>Booking History</h1>
+          </div>
 
-<h1>Bookings</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Team</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bookings.each do |booking| %>
-      <tr>
-        <td><%= booking.email %></td>
-        <td><%= booking.start %></td>
-        <td><%= booking.end %></td>
-        <td><%= booking.team %></td>
-        <td><%= link_to 'Show', booking %></td>
-        <td><%= link_to 'Release', booking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+          <div class="col-lg-10 col-lg-offset-1">
+            <table class="table table-striped table-hover ">
+              <thead>
+              <tr>
+                <th>Room</th>
+                <th>Email</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Active</th>
+                <th colspan="3"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% if @bookings.present? %>
+                  <% @bookings.each do |booking| %>
+                      <tr>
+                        <td><%= booking.room %></td>
+                        <td><%= booking.email %></td>
+                        <td><%= booking.start %></td>
+                        <td><%= booking.end %></td>
+                        <% if booking.end.blank? %>
+                            <td class="success">Yes</td>
+                        <% else %>
+                            <td class="danger">No</td>
+                        <% end %>
+                        <td><%= link_to 'Show', booking, class: "text-info" %></td>
+                        <% if booking.end.blank? %>
+                            <td><%= link_to 'Release', booking_path(booking), method: :delete, data: {confirm: 'Are you sure?'}, class: "text-danger" %></td>
+                        <% end %>
+                      </tr>
+                  <% end %>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <% if current_user.admin %>
+        <%= link_to 'Back', home_history_path, class: "btn btn-primary" %>
+    <% else %>
+        <%= link_to 'Back', home_path, class: "btn btn-primary" %>
     <% end %>
-  </tbody>
-</table>
+<% end %>

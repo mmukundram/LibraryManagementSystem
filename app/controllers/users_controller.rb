@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def history
-    # Show reservation history of user
+  def togglePrivilege
+    @user = User.find_by(email: params[:email])
+    @user.privilege = !@user.privilege
+    if @user.save
+      redirect_to users_path, notice: "User privilege updated"
+    else
+      redirect_to users_path
+    end
   end
 
   # GET /users

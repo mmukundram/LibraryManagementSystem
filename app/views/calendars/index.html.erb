@@ -6,18 +6,16 @@
             <h1>Booking Calendar</h1>
           </div>
 
-          <div class="col-lg-10 col-lg-offset-1">
-            <%= month_calendar(attribute: :start, events: @bookings, class: "table-striped table-bordered") do |date, bookings| %>
-                <%= date %>
+          <%= month_calendar(attribute: :start, events: @bookings) do |date, bookings| %>
+              <%= date.day %>
 
-                <% bookings.each do |booking| %>
-                    <div>
-                      <%= "Room " + booking.room.to_s + ", User: " + booking.email %>
-                    </div>
-                <% end %>
+              <% bookings.each do |booking| %>
+                  <div>
+                    <%= link_to("Room " + booking.room.to_s + " - " + booking.start.localtime.strftime("%l %p").to_s, booking_url(booking.id)) %>
+                  </div>
+              <% end %>
 
-            <% end %>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>

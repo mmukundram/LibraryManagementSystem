@@ -26,7 +26,11 @@
                         <td><%= user.name %></td>
                         <td><%= user.address %></td>
                         <td><%= user.phone %></td>
-                        <td><%= user.privilege %></td>
+                        <% if user.privilege %>
+                            <td class="success"><%= link_to 'Yes', privilege_path(:email => user.email), method: 'post' %></td>
+                        <% else %>
+                            <td class="danger"><%= link_to 'No', privilege_path(:email => user.email), method: 'post' %></td>
+                        <% end %>
                         <td><%= link_to 'Show', user, class: "text-info" %></td>
                         <td><%= link_to 'Reservation History', user, class: "text-warning" %></td>
                         <% if user.removable %>
