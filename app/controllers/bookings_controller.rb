@@ -84,9 +84,10 @@ class BookingsController < ApplicationController
             user2 = User.find_by(email: str)
             if user2.present?
               # Send email to user2.email
+              BookingMailer.new_booking(@booking, user2).deliver_now
             end
           end
-          redirect_to @booking, notice: 'Booking was successfully created.'
+          redirect_to @booking, notice: 'Booking was successfully created'
           return
         end
       end

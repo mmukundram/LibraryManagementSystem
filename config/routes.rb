@@ -15,6 +15,5 @@ Rails.application.routes.draw do
   resources       :rooms
   get             '/search/rooms',     to: 'rooms#search'
   post            '/privilege',        to: 'users#togglePrivilege'
-
   root 'sessions#new'
 end
